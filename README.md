@@ -79,5 +79,5 @@ ForensicSight incorporates a lightweight RAG system backed by a **Chroma vector 
 
 ## 8. Known Limitations & Future Work
 
-- **Rate Limit Handling:** The system relies on third-party APIs (Groq, OpenRouter), making it susceptible to API rate limits (TPM/TPD).
+- **Rate Limit Handling:** The system relies on third-party APIs (Groq), making it susceptible to API rate limits (TPM/TPD).
 - **Map-Reduce Tiling Trade-offs:** Splitting one image into 4 quadrants exponentially increases the visual detail available but multiplies external API request quotas by four, generating higher loads on free-tier rate limits.
