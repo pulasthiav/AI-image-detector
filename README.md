@@ -32,7 +32,7 @@ The agents exchange structured messages using LangChain and a custom protocol to
 
 ## 4. Model Selection Strategy & Comparison Table (Section 4c)
 
-Our model strategy deliberately relies on a multi-provider setup to optimize latency, cost, and multimodal reasoning capabilities. 
+Our model strategy deliberately relies on a multi-model setup to optimize latency, cost, and multimodal reasoning capabilities. 
 
 | Sub-task | Model (Provider) | Why Chosen (Latency, Cost, Context, Reasoning) |
 |---|---|---|
