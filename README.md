@@ -56,6 +56,7 @@ We verified context relevance empirically by evaluating the RAG subset against s
 2. _"How to detect AI lighting inconsistencies?"_
 3. _"Identify signs of AI-generated hair and skin texturing."_
 4. _"Detecting anomalous anatomical features in AI art."_
+5. _"How to spot blending errors in AI generated backgrounds?"_
 
 ## 6. Setup & Installation Instructions
 
@@ -69,7 +70,7 @@ We verified context relevance empirically by evaluating the RAG subset against s
 1. Clone the repository:
    ```bash
    git clone https://github.com/pulasthiav/AI-image-detector.git
-   cd <REPOSITORY_NAME>
+   cd AI-image-detector
    ```
 2. Install dependencies:
    ```bash
@@ -85,8 +86,7 @@ We verified context relevance empirically by evaluating the RAG subset against s
 
 ## 7. Deployment & Live Demo Link (Section 4e)
 
-- **Live Demo (Streamlit Community Cloud):** [Insert Live App URL Here]
-- **2-Minute Screen-recorded Demo Link:** [Insert Demo Video URL Here]
+- **Live Demo (Streamlit Community Cloud):** https://ai-image-detector-jioqu58ymmgbzy8pgs8i9x.streamlit.app
 
 ## 8. Known Limitations & Future Work
 
