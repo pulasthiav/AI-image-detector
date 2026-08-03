@@ -65,7 +65,6 @@ ForensicSight incorporates a lightweight RAG system backed by a **Chroma vector 
    Create a `.env` file in the root directory and add your API keys:
    ```env
    GROQ_API_KEY=your_groq_api_key_here
-   OPENROUTER_API_KEY=your_openrouter_api_key_here
    ```
    *(For Streamlit deployments, add these under the Streamlit Community Cloud Secrets management console).*
 
