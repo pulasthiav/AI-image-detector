@@ -178,11 +178,11 @@ with st.sidebar:
 **Pattern 1 — Router**  
 Orchestrator receives the image and routes it into the forensic pipeline.
 
-**Pattern 2 — Tool-Use**  
-Analyst queries a Chroma RAG index built from research PDFs.
+**Pattern 2 — Tool-Use + Map-Reduce Tiling**  
+Analyst queries a Chroma RAG index, then inspects 4 high-res image quadrants in separate vision calls and aggregates findings.
 
 **Pattern 3 — Orchestrator–Worker & Reflection**  
-Analyst inspects the image; Reporter critiques findings and writes the verdict.
+Analyst inspects each tile; Reporter critiques the combined findings and writes the verdict.
         """
     )
 
@@ -192,14 +192,16 @@ Analyst inspects the image; Reporter critiques findings and writes the verdict.
         """
 | Role | Model |
 |------|-------|
-| Routing | `llama-3.1-8b-instant` |
-| Vision Analyst | `qwen/qwen3.6-27b` |
-| Reporter | `llama-3.3-70b-versatile` |
+| Routing | Groq `llama-3.1-8b-instant` |
+| Vision Analyst | Groq Vision Model (4-tile Map-Reduce) |
+| Reporter | Groq `llama-3.3-70b-versatile` |
         """
     )
 
     st.divider()
-    st.info("Set a valid `GROQ_API_KEY` in your `.env` file before running analysis.")
+    st.info(
+        "Set a valid `GROQ_API_KEY` in your `.env` file before running analysis."
+    )
     st.caption("IT41043 · Intelligent Systems · Agentic AI Assignment")
 
 # ---------------------------------------------------------------------------
@@ -224,7 +226,7 @@ with c1:
         <div class="step-card">
           <div class="step-num">Step 01</div>
           <div class="step-title">Upload Image</div>
-          <p class="step-copy">Drop a JPG, JPEG, or PNG. We compress it locally before any model call.</p>
+          <p class="step-copy">Drop a JPG, JPEG, or PNG. We split it into high-res quadrants before analysis.</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -235,7 +237,7 @@ with c2:
         <div class="step-card">
           <div class="step-num">Step 02</div>
           <div class="step-title">AI Analyzes vs Knowledge Base</div>
-          <p class="step-copy">The Analyst retrieves technical guidelines via RAG, then inspects the image with a vision model.</p>
+          <p class="step-copy">The Analyst retrieves RAG guidelines, then inspects each quadrant with a separate vision call.</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -268,7 +270,7 @@ with col1:
         "Choose a JPG, JPEG, or PNG image",
         type=["jpg", "jpeg", "png"],
         accept_multiple_files=False,
-        help="The image is resized and compressed before being sent to the vision model.",
+        help="The image is split into 4 high-res quadrants; each tile is analyzed separately.",
     )
 
     if uploaded_file is not None:
@@ -305,19 +307,26 @@ with col2:
             step_labels = {
                 "route": "🧭 **Orchestrator** — receiving image and routing to workers…",
                 "rag": "🕵️ **Analyst** — checking the RAG knowledge base…",
-                "vision": "🖼️ **Analyst** — calling vision model with image + context…",
+                "vision": "🖼️ **Analyst** — Map-Reduce vision tiling…",
                 "report": "📝 **Reporter** — reflecting on findings and drafting verdict…",
                 "done": "✅ **Pipeline** — agents finished handoff.",
             }
 
             try:
                 with st.status("Agentic pipeline running…", expanded=True) as status:
+                    _vision_header_shown = {"done": False}
 
                     def on_progress(step: str, detail: str = "") -> None:
                         # Stream each agent milestone into the status panel in real time
-                        st.write(step_labels.get(step, detail or step))
-                        if detail and step in ("rag", "vision", "report"):
-                            st.caption(detail)
+                        if step == "vision" and detail:
+                            if not _vision_header_shown["done"]:
+                                st.write(step_labels["vision"])
+                                _vision_header_shown["done"] = True
+                            st.write(detail)
+                        else:
+                            st.write(step_labels.get(step, detail or step))
+                            if detail and step in ("rag", "report"):
+                                st.caption(detail)
 
                     result = orchestrator_router(
                         image_data=image_bytes,
