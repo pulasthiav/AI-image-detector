@@ -36,8 +36,9 @@ Our model strategy deliberately relies on a multi-provider setup to optimize lat
 
 | Sub-task | Model (Provider) | Why Chosen (Latency, Cost, Context, Reasoning) |
 |---|---|---|
-| Intent Routing & Reporting | `llama-3.1-8b-instant` / `llama-3.3-70b` (Groq) | Ultra-low latency, near-zero cost, highly efficient for orchestration and text synthesis. |
-| High-Res Vision Tiling Analysis | OpenRouter Vision Model (e.g., Free-tier multimodal) | Superior visual reasoning capacity required to inspect micro-artifacts, lighting, and skin textures across image tiles. |
+| Intent Routing | `llama-3.1-8b-instant` (Groq) | Ultra-low latency, near-zero cost, highly efficient for fast intent classification and routing decisions. |
+| High-Res Vision Tiling Analysis | Groq Vision Model (4-tile Map-Reduce) | High-speed multimodal processing across image quadrants to detect structural visual artifacts. |
+| Reporting & Synthesis | `llama-3.3-70b-versatile` (Groq) | Superior reasoning capacity and large context window required for deep reflection and synthesizing the final forensic verdict. |
 
 ## 5. RAG Integration & Evaluation (Section 4d)
 
