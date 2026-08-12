@@ -38,7 +38,7 @@ load_dotenv()
 RAG_QUERY = "technical artifacts found in AI generated images"
 # Get VISION_MODEL from the environment, defaulting to a known valid Groq vision model.
 # This prevents forcing qwen which has TPD rate limits.
-VISION_MODEL = os.environ.get("VISION_MODEL", "llama-3.2-11b-vision-preview")
+VISION_MODEL = os.environ.get("VISION_MODEL", "llama-3.2-11b-vision-instruct")
 # Per-tile budget: high enough for forensic detail, low enough for TPM limits
 TILE_MAX_SIDE = 300
 TILE_JPEG_QUALITY = 75
