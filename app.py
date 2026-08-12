@@ -277,7 +277,7 @@ with col1:
         st.image(
             uploaded_file,
             caption=f"Preview · {uploaded_file.name}",
-            use_container_width=True,
+            width="stretch",
         )
     else:
         st.caption("No image selected yet. Upload evidence to unlock analysis.")
